@@ -1,0 +1,29 @@
+\documentclass{article}
+
+\usepackage{algpseudocode,algorithm}
+
+
+\begin{document}
+\begin{algorithm}
+\caption{QuickSelect}
+\begin{algorithmic}
+
+
+\Procedure{QuickSelect}{A, k, l , r}
+    \If{$l == r$}
+        \State \Return {$l$}
+    \EndIf
+    \State {$x = Partition(A, l, r)$}
+    \If{$k == x$}
+        \State \Return {$A[x]$}
+    \ElsIf{$k < x$}
+        \State \Return {$QuickSelect(A, k, l, x-1)$}
+    \Else
+        \State \Return {$QuickSelect(A, k, x+1, r)$}
+    \EndIf
+\EndProcedure
+
+
+\end{algorithmic}
+\end{algorithm}
+\end{document}
