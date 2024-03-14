@@ -9,7 +9,8 @@
 \begin{algorithmic}
 
 
-\Procedure{QuickSelect}{A, k, l , r}
+\Procedure{QuickSelect}{A, k, l , r} 
+\State {\textbf{PRECONDIZIONE:}} {$k$ maggiore di zero e minore di $A.length$}
     \If{$l == r$}
         \State \Return {$l$}
     \EndIf
