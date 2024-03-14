@@ -11,44 +11,46 @@ e O(n) nel caso medio, dove n è il numero di elementi del vettore.
 
 '''
 
-def partition(arr, l, r): 
+def partition(arr, l, r, pivot): 
       
-    x = arr[r] 
-    i = l 
+    x = arr[pivot]
+    Swap(arr, pivot, r) 
+    index = l 
     for j in range(l, r): 
           
         if arr[j] <= x: 
-            arr[i], arr[j] = arr[j], arr[i] 
-            i += 1
+            Swap(arr, index, j)
+            index += 1
               
-    arr[i], arr[r] = arr[r], arr[i] 
-    return i 
+    Swap(arr, index, r) 
+    return index
+
+def Swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i] 
   
 def QuickSelect(arr, l, r, k): 
+        if(k<0 or k > len(arr)-1):
+            return None
+        if(l==r):
+            return arr[l]   
+        # Partiziona gli elementi e restituisci il pivot
+        p_index = partition(arr, l, r, len(arr)//2) 
   
-    # Se k è minore del numero di elementi nell' array
-    # e maggiore di zero
-    if (k > 0 and k <= r - l + 1): 
-  
-        # Partiziona gli elementi e ritorna il pivot  
-        index = partition(arr, l, r) 
-  
-        # Se il pivot ha la stessa posizione di k, restituisco l'elemento in quella posizione
-        if (index - l == k - 1): 
-            return arr[index] 
-
-        # Se il pivot è troppo grande, mi sposto verso sinistra nell'array
-        if (index - l > k - 1): 
-            return QuickSelect(arr, l, index - 1, k) 
-  
-        # Altrimenti in modo analogo verso destra e aggiorno k per il nuovo intervallo
-        return QuickSelect(arr, index + 1, r,  
-                            k - index + l - 1)  
+        # Se il pivot ha la stesso valore di k, restituisco l'elemento in quella posizione, rispetto all'indice
+        if (k == p_index): 
+            return arr[p_index] 
+        # Se il pivot è troppo grande, richiamo la funzione e mi sposto verso sinistra nell'array
+        elif (k < p_index):
+            return QuickSelect(arr, l, p_index - 1, k) 
+        else:
+            # Altrimenti in modo analogo, ma verso destra e aggiorno k per il nuovo intervallo
+            return QuickSelect(arr, p_index + 1, r, k)  
 
 
 
-# Test case: L'elemento che andra in quinta posizione è 43 -> [12, 21, 23, 29, 43, 45, 72, 75, 98, 123]
+# Test: L'elemento che andra in quinta posizione è 43 -> [12, 21, 23, 29, 43, 45, 72, 75, 98, 123]
 arr = [43, 45, 23, 123, 75, 98, 21, 29, 12, 72] 
+k = 10
 n = len(arr)
-k = 5
-print(QuickSelect(arr, 0, n - 1, k))
+
+print(QuickSelect(arr, 0, n - 1, k-1))
