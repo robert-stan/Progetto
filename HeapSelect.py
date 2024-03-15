@@ -10,3 +10,13 @@ Per k sufficientemente piccolo, quindi, l'algoritmo "heap select" sarà preferib
 
 '''
 
+# Passaggi:
+# New H1 da Arr
+# New H2 (H2 ha un solo nodo, cioe' H1.root)
+# Per i=1 a i<k
+#   extracted_node = MinHeapExtract(H2)
+#   node_H1 = MinHeapSearch(node)
+#   H2.MinHeapInsert(node_H1.left)
+#   H2.MinHeapInsert(node_H1.right)
+
+
