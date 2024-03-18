@@ -3,15 +3,19 @@ import csv
 import io
 import math
 
+# Creo il logger
 lgr = logging.getLogger('AETA Output Info')
 lgr.setLevel(logging.DEBUG)
 
+# Imposto il file per l'output
 fh = logging.FileHandler('src/Output.csv')
 fh.setLevel(logging.DEBUG)
 
+# Scelgo le colonne che voglio sul file .csv
 frmt = logging.Formatter('%(asctime)s,%(name)s,%(levelname)s,%(message)s')
 fh.setFormatter(frmt)
 
+# Passo l'handler al logger
 lgr.addHandler(fh)
 
 def WriteLog(test_time, run_number, elapsed_time, iteration):

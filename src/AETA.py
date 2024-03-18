@@ -34,9 +34,10 @@ import TimeManager
 import random
 
 RUNS = 1 # Numero di run
-A = 100
-B = 1.07226722202
+A = 100  # Valore fisso di A
+B = 1.07226722202 # Valore fisso di B per garantire la serie geometrica una volta che viene elevato alla i, con i che va da 0 a 99
 
+# Funzione per troncare le cifre dopo la virgola in base ai parametri passati come argomenti di funzione
 def truncate(number, digits) -> float:
     # Improve accuracy with floating point operations, to avoid truncate(16.4, 2) = 16.39 or truncate(-1.13, 2) = -1.12
     nbDecimals = len(str(number).split('.')[1]) 
@@ -46,31 +47,42 @@ def truncate(number, digits) -> float:
     return math.trunc(stepper * number) / stepper
 
 def main():
+    # Imposto il tempo minimo
     MinTime = TimeManager.MinTime()
-
+    # this_run indica la run attuale
     for this_run in range(0, RUNS):
+        # i e' l'esponente con cui eleviamo B per aumentare la dimensione dell vettore (secondo A*B^i)
         for i in range(0, 99):
 
             print("#Run: " + str(this_run) + " #Test: " + str(i))
             
             iteration = 0
-            
+            # Genero la dimensione del vettore
             n = ArrayGenerator.SizeGen(A, B, i)
+            # Genero il vettore
             arr = ArrayGenerator.ArrGen(n)
             print("Array size is " + str(len(arr)))
-
+            # Genero k in modo randomico
             k = random.randrange(1, n)
             print("K is: " + str(int(k)))
 
+            # Start al timer
             start_time = TimeManager.Now()
-            while True:
+
+            while True: # Simulo un ciclo do while
+                # Eseguo QuickSelect sul vettore
                 element = QuickSelect.QuickSelect(arr, 0, len(arr) - 1, k-1)
+                # Fermo il timer
                 end_time = TimeManager.Now()
+                # Conto l'iterazione
                 iteration = iteration + 1
+                # Verifico se ho computato abbastanza
                 if(end_time - start_time > MinTime):
+                    #Esco dal ciclo while
                     break
-            
+            # Ottengo il tempo impiegato nel while all'i-esima iterazione del for
             elapsed_time = end_time - start_time
+            # Salvo le informazioni nel log file
             Logger.WriteLog(i, this_run, elapsed_time, iteration)
 
 if __name__ == "__main__":
