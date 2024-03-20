@@ -27,10 +27,10 @@ Si richiede di implementare un programma per la misurazione dei tempi medi di es
 '''
 import time
 import math
-import ArrayGenerator
+import Support.ArrayGenerator as ArrayGenerator
 import QuickSelect
-import Logger
-import TimeManager
+import Log.Logger as Logger
+import Support.TimeManager as TimeManager
 import random
 
 RUNS = 1 # Numero di run
@@ -39,7 +39,7 @@ B = 1.07226722202 # Valore fisso di B per garantire la serie geometrica una volt
 
 # Funzione per troncare le cifre dopo la virgola in base ai parametri passati come argomenti di funzione
 def truncate(number, digits) -> float:
-    # Improve accuracy with floating point operations, to avoid truncate(16.4, 2) = 16.39 or truncate(-1.13, 2) = -1.12
+    # Migliora la precisione con operazioni in floating point, per evitare: truncate(16.4, 2) = 16.39 or truncate(-1.13, 2) = -1.12
     nbDecimals = len(str(number).split('.')[1]) 
     if nbDecimals <= digits:
         return number
@@ -66,17 +66,17 @@ def main():
             k = random.randrange(1, n)
             print("K is: " + str(int(k)))
 
-            # Start al timer
+            # Salvo l'istante di tempo all'avvio)
             start_time = TimeManager.Now()
 
             while True: # Simulo un ciclo do while
                 # Eseguo QuickSelect sul vettore
                 element = QuickSelect.QuickSelect(arr, 0, len(arr) - 1, k-1)
-                # Fermo il timer
+                # Salvo l'istante di tempo una volta terminata l'esecuzione di QuickSelect
                 end_time = TimeManager.Now()
                 # Conto l'iterazione
                 iteration = iteration + 1
-                # Verifico se ho computato abbastanza
+                # Se ho computato più tempo rispetto MinTime esco dal while
                 if(end_time - start_time > MinTime):
                     #Esco dal ciclo while
                     break

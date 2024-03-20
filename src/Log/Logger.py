@@ -8,7 +8,7 @@ lgr = logging.getLogger('AETA Output Info')
 lgr.setLevel(logging.DEBUG)
 
 # Imposto il file per l'output
-fh = logging.FileHandler('src/Output.csv')
+fh = logging.FileHandler('src/Log/Output.csv')
 fh.setLevel(logging.DEBUG)
 
 # Scelgo le colonne che voglio sul file .csv
