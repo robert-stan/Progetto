@@ -64,6 +64,13 @@ def HeapSelect(A, k):
     return H2[0] # Restituisco la root di H2, che ora e' il k-esimo elemento piu' piccolo di A | A non viene or
 
 
+#  __    __     ______     __     __   __    
+# /\ "-./  \   /\  __ \   /\ \   /\ "-.\ \   
+# \ \ \-./\ \  \ \  __ \  \ \ \  \ \ \-.  \  
+#  \ \_\ \ \_\  \ \_\ \_\  \ \_\  \ \_\\"\_\ 
+#   \/_/  \/_/   \/_/\/_/   \/_/   \/_/ \/_/ 
+
+
 if __name__ == "__main__":
 
     A = [55, 33, 11, 22, 44, 77, 99, 66, 88, 100]
