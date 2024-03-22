@@ -1,33 +1,22 @@
-import logging
 import csv
-import io
 import math
 
-# Creo il logger
-lgr = logging.getLogger('AETA Output Info')
-lgr.setLevel(logging.DEBUG)
+def OpenCSV():
+    filename = 'src/Log/Output.csv'
+    header = ['#RUN,', ' #TEST,', ' TOTAL_TIME,', ' ITERATIONS,', ' SINGLE_COMPUTE_TIME']
+    csv_file = open(filename, 'w')
+    csv_file.writelines(header)
+    csv_file.write('\n')
+    csv_file.flush()
+    return csv_file
+        
 
-# Imposto il file per l'output
-fh = logging.FileHandler('src/Log/Output.csv')
-fh.setLevel(logging.DEBUG)
-
-# Scelgo le colonne che voglio sul file .csv
-frmt = logging.Formatter('%(asctime)s,%(name)s,%(levelname)s,%(message)s')
-fh.setFormatter(frmt)
-
-# Passo l'handler al logger
-lgr.addHandler(fh)
-
-def WriteLog(test_time, run_number, elapsed_time, iteration):
-    lgr.debug("TEST #" + str(test_time) + 
-              ", RUN #" + str(run_number) + 
-              ", TIME " + str(truncate(elapsed_time, 2)) + 
-              " seconds, ITERATIONS #" + str(iteration) + ", TIME_QS: " + str(truncate((elapsed_time/iteration) * 1000, 3)) + " ms")
-
-def truncate(number, digits) -> float:
-    # Improve accuracy with floating point operations, to avoid truncate(16.4, 2) = 16.39 or truncate(-1.13, 2) = -1.12
-    nbDecimals = len(str(number).split('.')[1]) 
-    if nbDecimals <= digits:
-        return number
-    stepper = 10.0 ** digits
-    return math.trunc(stepper * number) / stepper
+def WriteData(run, test, total_time, iterations, single_compute_time, csv_file):
+    filename = 'src/Log/Output.csv'
+    data = [str(run) + ', ', str(test) + ', ', str(total_time) + ', ', str(iterations) + ', ', str(single_compute_time)]
+    csv_file.writelines(data)
+    csv_file.write('\n')
+    csv_file.flush()
+    
+def CloseCSV(csv_file):
+    csv_file.close()

@@ -49,12 +49,14 @@ def truncate(number, digits) -> float:
 def main():
     # Imposto il tempo minimo
     MinTime = TimeManager.MinTime()
+
+    csv = Logger.OpenCSV()
     # this_run indica la run attuale
-    for this_run in range(0, RUNS):
+    for this_run in range(RUNS):
         # i e' l'esponente con cui eleviamo B per aumentare la dimensione dell vettore (secondo A*B^i)
         for i in range(0, 99):
 
-            print("#Run: " + str(this_run) + " #Test: " + str(i))
+            print("#Run: " + str(this_run + 1) + " #Test: " + str(i + 1))
             
             iteration = 0
             # Genero la dimensione del vettore
@@ -83,7 +85,8 @@ def main():
             # Ottengo il tempo impiegato nel while all'i-esima iterazione del for
             elapsed_time = end_time - start_time
             # Salvo le informazioni nel log file
-            Logger.WriteLog(i, this_run, elapsed_time, iteration)
+            Logger.WriteData(this_run, i, truncate(elapsed_time, 2), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
+    Logger.CloseCSV(csv)
 
 if __name__ == "__main__":
     main()
