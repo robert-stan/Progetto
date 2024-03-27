@@ -27,10 +27,9 @@ Si richiede di implementare un programma per la misurazione dei tempi medi di es
 '''
 import time
 import math
-import Support.ArrayGenerator as ArrayGenerator
 import QuickSelect
-import Log.Logger as Logger
-import Support.TimeManager as TimeManager
+from Log import Logger
+from Support import ArrayGenerator, TimeManager
 import random
 
 RUNS = 1 # Numero di run
@@ -54,7 +53,7 @@ def main():
     # this_run indica la run attuale
     for this_run in range(RUNS):
         # i e' l'esponente con cui eleviamo B per aumentare la dimensione dell vettore (secondo A*B^i)
-        for i in range(0, 99):
+        for i in range(0, 100):
 
             print("#Run: " + str(this_run + 1) + " #Test: " + str(i + 1))
             
@@ -68,7 +67,7 @@ def main():
             k = random.randrange(1, n)
             print("K is: " + str(int(k)))
 
-            # Salvo l'istante di tempo all'avvio)
+            # Salvo l'istante di tempo all'avvio
             start_time = TimeManager.Now()
 
             while True: # Simulo un ciclo do while
@@ -82,10 +81,12 @@ def main():
                 if(end_time - start_time > MinTime):
                     #Esco dal ciclo while
                     break
+            
+            print("Element in k-th position is " + str(element))
             # Ottengo il tempo impiegato nel while all'i-esima iterazione del for
             elapsed_time = end_time - start_time
             # Salvo le informazioni nel log file
-            Logger.WriteData(this_run, i, truncate(elapsed_time, 2), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
+            Logger.WriteData(this_run, i, truncate(elapsed_time, 5), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
     Logger.CloseCSV(csv)
 
 if __name__ == "__main__":
