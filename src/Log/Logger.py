@@ -2,7 +2,7 @@ import csv
 import math
 
 def OpenCSV():
-    filename = 'src/Log/Output.csv'
+    filename = 'Progetto-ASD/src/Log/Output.csv'
     header = ['#RUN,', ' #TEST,', ' TOTAL_TIME,', ' ITERATIONS,', ' SINGLE_COMPUTE_TIME']
     csv_file = open(filename, 'w')
     csv_file.writelines(header)
@@ -12,7 +12,7 @@ def OpenCSV():
         
 
 def WriteData(run, test, total_time, iterations, single_compute_time, csv_file):
-    filename = 'src/Log/Output.csv'
+    filename = 'Progetto-ASD/src/Log/Output.csv'
     data = [str(run) + ', ', str(test) + ', ', str(total_time) + ', ', str(iterations) + ', ', str(single_compute_time)]
     csv_file.writelines(data)
     csv_file.write('\n')

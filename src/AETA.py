@@ -86,7 +86,7 @@ def main():
             # Ottengo il tempo impiegato nel while all'i-esima iterazione del for
             elapsed_time = end_time - start_time
             # Salvo le informazioni nel log file
-            Logger.WriteData(this_run, i, truncate(elapsed_time, 5), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
+            Logger.WriteData(this_run, i, truncate(elapsed_time, 3), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
     Logger.CloseCSV(csv)
 
 if __name__ == "__main__":
