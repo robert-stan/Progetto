@@ -25,6 +25,8 @@ Si richiede di implementare un programma per la misurazione dei tempi medi di es
         return stop - start
 
 '''
+import sys
+sys.setrecursionlimit(10**5)
 import time
 import math
 import QuickSelect
@@ -32,7 +34,7 @@ from Log import Logger
 from Support import ArrayGenerator, TimeManager
 import random
 
-RUNS = 1 # Numero di run
+RUNS = 6 # Numero di run
 A = 100  # Valore fisso di A
 B = 1.07226722202 # Valore fisso di B per garantire la serie geometrica una volta che viene elevato alla i, con i che va da 0 a 99
 
@@ -48,7 +50,6 @@ def truncate(number, digits) -> float:
 def main():
     # Imposto il tempo minimo
     MinTime = TimeManager.MinTime()
-
     csv = Logger.OpenCSV()
     # this_run indica la run attuale
     for this_run in range(RUNS):
@@ -78,7 +79,7 @@ def main():
                 # Conto l'iterazione
                 iteration = iteration + 1
                 # Se ho computato più tempo rispetto MinTime esco dal while
-                if(end_time - start_time > MinTime):
+                if(end_time - start_time >= MinTime):
                     #Esco dal ciclo while
                     break
             
@@ -86,7 +87,7 @@ def main():
             # Ottengo il tempo impiegato nel while all'i-esima iterazione del for
             elapsed_time = end_time - start_time
             # Salvo le informazioni nel log file
-            Logger.WriteData(this_run, i, truncate(elapsed_time, 3), iteration, truncate((elapsed_time/iteration) * 1000, 3), csv)
+            Logger.WriteData(this_run, i, truncate(elapsed_time, 5), iteration, truncate((elapsed_time/iteration) * 1000, 5), csv)
     Logger.CloseCSV(csv)
 
 if __name__ == "__main__":

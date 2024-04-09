@@ -24,8 +24,8 @@ SCOPO: Spostare gli elementi dell'intervallo, per fare in modo che quelli minori
 
 PARAMETRI:
 - arr: Lista di numeri (vettore)
-- l: Intero (Intervallo sinistro)
-- r: Intero (Intervallo destro)
+- l: Intero (Limite sinistro dell'intervallo)
+- r: Intero (Limite destro dell'intervallo)
 - pivot: Intero (Perno iniziale)
 
 RETURNS:
@@ -62,12 +62,14 @@ def Swap(arr, i, j):
 '''
 Median of Medians Select
 ---
-. MISSION
-. PARAMS
-. 
-.
-.
----
+. MISSION:
+- Restituire il k-esimo elemento più piccolo del vettore fornito in input
+
+. PARAMS:
+- arr: Lista di numeri (vettore)
+- left: Intero, Limite sinistro dell'intervallo
+- right: Intero, Limite destro dell'intervallo
+- k: Intero, indice dell'elemento più piccolo in posizione k
 '''
 
 def MoMSelect(arr, left, right, k):
