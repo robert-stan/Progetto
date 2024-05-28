@@ -18,23 +18,6 @@ Per k sufficientemente piccolo, quindi, l'algoritmo "heap select" sarà preferib
 '''
 from heapq import heappush, heappop, heapify
 
-# Passaggi:
-# New H1 da Arr
-# New H2 (H2 ha un solo nodo inizialmente, cioe' H1.root)
-#   Per i=0 a i<k:
-#       MinHeapExtract(H2)
-#       IF LEFT in heapsize
-#           H2.MinHeapInsert(node_H1.left)
-#       IF RIGHT in heapsize
-#           H2.MinHeapInsert(node_H1.right)
-# Return H2.root
-
-'''
-Metodi usati da libreria HEAPQ:
-heappush
-heappop
-heapify
-'''
 
 def HeapSelect(A, k):
 
@@ -45,46 +28,40 @@ def HeapSelect(A, k):
     heapify(H1) # H1 ora e' una min heap
 
     H2 = []
-    heappush(H2, H1[0])
+    heappush(H2, (H1[0], 0))
 
     i = 0
     while(i<k):
-        #Estraggo la root da H2
-        heappop(H2)
-        # Se ha figlio sinistro
-        if(2*i < len(H1)):
-            # Inseriscilo in H2
-            heappush(H2, H1[2*i])
-        # Se ha figlio destro
-        if(2*i + 1 < len(H1)):
-            #Inserisco il figlio destro in H2
-            heappush(H2, H1[2*i+1])
+        # Estraggo la root di H2
+        element, indice = heappop(H2)
+
+        # Figlio sinistro 
+        indice_figlio_sx = 2 * indice + 1
+
+        # Inserisco il figlio sinistro se c'e'
+        if(indice_figlio_sx < len(H1)):
+            heappush(H2, (H1[indice_figlio_sx], indice_figlio_sx))
+
+        # Figlio destro
+        indice_figlio_dx = 2 * indice + 2
+
+        # Inserisco il figlio destro se c'e'
+        if(indice_figlio_dx < len(H1)):
+            heappush(H2, (H1[indice_figlio_dx], indice_figlio_dx))
+
         i = i + 1
+    
+    return element # Restituisco il k-esimo elemento piu' piccolo di A
 
-    return H2[0] # Restituisco la root di H2, che ora e' il k-esimo elemento piu' piccolo di A | A non viene or
-
-
-#  __    __     ______     __     __   __    
-# /\ "-./  \   /\  __ \   /\ \   /\ "-.\ \   
-# \ \ \-./\ \  \ \  __ \  \ \ \  \ \ \-.  \  
-#  \ \_\ \ \_\  \ \_\ \_\  \ \_\  \ \_\\"\_\ 
-#   \/_/  \/_/   \/_/\/_/   \/_/   \/_/ \/_/ 
-
+def scanArray():
+    tokens = input().split(" ")
+    return [int(x) for x in tokens if x]  # "if x" is for filtering out empty tokens
 
 if __name__ == "__main__":
 
-    A = [55, 33, 11, 22, 44, 77, 99, 66, 88, 100]
-    k=5
+    arr = scanArray()
+    k = int(input())
 
-    print("\n")
+    print(HeapSelect(arr, k))
 
-    print("Elementi del vettore A:")
-    print(A)
 
-    print("\n")
-
-    print("K-esimo elemento piu' piccolo di A: " + str(HeapSelect(A, k)) + ", con k = " + str(k) + ".")
-
-    print("\n")
-
-    # HeapSelect e' implementata per restituire le posizioni dei k-esimi elementi considerando che in posizione 1 di un vettore c'e' il primo elemento, in due il secondo, ecc... (gli indici partono da 1 e non da 0)
