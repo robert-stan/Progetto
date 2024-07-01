@@ -51,22 +51,33 @@ def main():
         }
         # Creo un dizionario per salvare i tempi medi d'esecuzione nei casi medi o peggiori
         tempi_medi = {name: {'medio': [], 'peggiore': [], 'dimensioni': []} for name in algoritmi.keys()}
-
-        for i in range(10): # Numero di run
-            print("RUN NUMERO:" + str(i))
+        for i in range(100): # Numero di run
+            print("TEST NUMERO:" + str(i))
             n = ArrayGenerator.SizeGen(A, B, i) # Genero la grandezza dell'input
             arr = ArrayGenerator.ArrGen(n) # Genero l'array per il caso medio
             k = random.randrange(1, n) # Genero k per il caso medio
+            # k = n // 2
 
             for name, algorithm in algoritmi.items(): # Mando in esecuzione ciascun algoritmo, con parametri d'input per il caso medio e peggiore, memorizzando i tempi
+                print("K caso Medio " + str(k))
 
+                print("Inizio misurazione caso medio di " + name)
                 tempo_medio = measure(arr, k, MinTime, algorithm) # Misuro il tempo medio d'esecuzione del caso medio
+                print("Fine misurazione caso medio di " + name)
+
                 tempi_medi[name]['medio'].append(tempo_medio) # Salvo il tempo medio nel dizionario
                 tempi_medi[name]['dimensioni'].append(n) # Salvo la dimensione dell'array durante questa run.
+
                 print(f"CASO MEDIO con: {name}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio:.6f} secondi") # Printo in console i dati
 
-                k_caso_peggiore, array_caso_peggiore = ArrayGenerator.GeneraCasiPeggiori(n, name) # Genero array e k per il caso peggiore
+
+                k_caso_peggiore, array_caso_peggiore = ArrayGenerator.GeneraCasiPeggiori(arr, k, n, name) # Genero array e k per il caso peggiore
+                print("K caso Peggiore " + str(k_caso_peggiore))
+
+                print("Inizio misurazione caso peggiore di " + name)
                 tempo_medio_caso_peggiore = measure(array_caso_peggiore, k_caso_peggiore, MinTime, algorithm) # Misuro il temo medio d'esecuzione del caso peggiore
+                print("Fine misurazione caso peggiore di " + name)
+
                 tempi_medi[name]['peggiore'].append(tempo_medio_caso_peggiore) # Salvo il tempo medio nel dizionario
 
                 print(f"CASO PEGGIORE: {name}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio_caso_peggiore:.6f} secondi") # Printo in console i dati
