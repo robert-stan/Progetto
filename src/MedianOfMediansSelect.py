@@ -70,6 +70,11 @@ def partition_MoM(arr, l, r, pivot):
     swap(arr, index, r)
     return index
 
+def mediano(arr, l, r): # Uso QuickSelect per trovare il mediano della partizione (sotto-intervallo) di array passata in input
+    n = r - l + 1
+    mid = l + n // 2
+    return QuickSelect(arr, l, r, mid)
+
 def QuickSelect(arr, l, r, k): 
         # Verifichiamo che k sia un parametro corretto, nel caso non lo fosse, restituiamo None
         if(k<0 or k > len(arr) - 1):
@@ -108,10 +113,6 @@ def swap(arr, i, j): # Swappa gli elementi in posizione i e j tra di loro
 
 
 
-def mediano(arr, l, r): # Uso QuickSelect per trovare il mediano della partizione (sotto-intervallo) di array passata in input
-    n = r - l + 1
-    mid = l + n // 2
-    return QuickSelect(arr, l, r, mid)
 
 
 

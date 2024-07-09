@@ -50,7 +50,7 @@ def main():
             'Median of Medians': MedianOfMediansSelect
         }
         # Creo un dizionario per salvare i tempi medi d'esecuzione nei casi medi o peggiori
-        tempi_medi = {name: {'medio': [], 'peggiore': [], 'dimensioni': []} for name in algoritmi.keys()}
+        tempi_medi = {nome: {'medio': [], 'peggiore': [], 'dimensioni': []} for nome in algoritmi.keys()}
         for i in range(100): # Numero di run
             print("TEST NUMERO:" + str(i))
             n = ArrayGenerator.SizeGen(A, B, i) # Genero la grandezza dell'input
@@ -58,35 +58,43 @@ def main():
             k = random.randrange(1, n) # Genero k per il caso medio
             # k = n // 2
 
-            for name, algorithm in algoritmi.items(): # Mando in esecuzione ciascun algoritmo, con parametri d'input per il caso medio e peggiore, memorizzando i tempi
+            for nome, algorithm in algoritmi.items(): # Mando in esecuzione ciascun algoritmo, con parametri d'input per il caso medio e peggiore, memorizzando i tempi
+                '''
+
+                CASO MEDIO:
+
+                '''
                 print("K caso Medio " + str(k))
 
-                print("Inizio misurazione caso medio di " + name)
+                print("Inizio misurazione caso medio di " + nome)
                 tempo_medio = measure(arr, k, MinTime, algorithm) # Misuro il tempo medio d'esecuzione del caso medio
-                print("Fine misurazione caso medio di " + name)
+                print("Fine misurazione caso medio di " + nome)
 
-                tempi_medi[name]['medio'].append(tempo_medio) # Salvo il tempo medio nel dizionario
-                tempi_medi[name]['dimensioni'].append(n) # Salvo la dimensione dell'array durante questa run.
+                tempi_medi[nome]['medio'].append(tempo_medio) # Salvo il tempo medio nel dizionario
+                tempi_medi[nome]['dimensioni'].append(n) # Salvo la dimensione dell'array durante questa run.
 
-                print(f"CASO MEDIO con: {name}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio:.6f} secondi") # Printo in console i dati
+                print(f"CASO MEDIO con: {nome}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio:.6f} secondi") # Printo in console i dati
+                '''
 
+                CASO PEGGIORE:
 
-                k_caso_peggiore, array_caso_peggiore = ArrayGenerator.GeneraCasiPeggiori(arr, k, n, name) # Genero array e k per il caso peggiore
+                '''
+                k_caso_peggiore, array_caso_peggiore = ArrayGenerator.GeneraCasiPeggiori(arr, k, n, nome) # Genero array e k per il caso peggiore
                 print("K caso Peggiore " + str(k_caso_peggiore))
 
-                print("Inizio misurazione caso peggiore di " + name)
+                print("Inizio misurazione caso peggiore di " + nome)
                 tempo_medio_caso_peggiore = measure(array_caso_peggiore, k_caso_peggiore, MinTime, algorithm) # Misuro il temo medio d'esecuzione del caso peggiore
-                print("Fine misurazione caso peggiore di " + name)
+                print("Fine misurazione caso peggiore di " + nome)
 
-                tempi_medi[name]['peggiore'].append(tempo_medio_caso_peggiore) # Salvo il tempo medio nel dizionario
+                tempi_medi[nome]['peggiore'].append(tempo_medio_caso_peggiore) # Salvo il tempo medio nel dizionario
 
-                print(f"CASO PEGGIORE: {name}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio_caso_peggiore:.6f} secondi") # Printo in console i dati
+                print(f"CASO PEGGIORE: {nome}, Dimensione dell'input: {n}, Tempo medio di exec: {tempo_medio_caso_peggiore:.6f} secondi") # Printo in console i dati
 
                 print("\n")
 
         genGrafico(algoritmi, tempi_medi) # Alla fine di tutte le Run, genero i grafici comparativi per ogni algoritmo
 
-    except KeyboardInterrupt: # Se l'utente stoppa l'esecuzione con Ctrl + C, genero ugualmente i grafici.
+    except KeyboardInterrupt: # Se l'utente stoppa l'esecuzione con Ctrl + C, genero i grafici ed esco dal programma.
         print("Exit")
         genGrafico(algoritmi, tempi_medi)
 
@@ -96,8 +104,8 @@ def genGrafico(algoritmi, tempi_medi): # Funzione per generare i grafici compara
             plt.figure(figsize=(20, 10))
             plt.plot(tempi_medi[nome]['medio'], label='Caso Medio')
             plt.plot(tempi_medi[nome]['peggiore'], label='Caso Peggiore')
-            x_labels = [f"Run {i}\nDim {d}" for i, d in enumerate(tempi_medi[nome]['dimensioni'])] # Creo le etichette con le dimensioni
-            plt.xticks(ticks=range(len(x_labels)), labels=x_labels, rotation=45)  # Setta le etichette dell'asse delle x
+            x_labels = [f"Dim. {d}" for d in tempi_medi[nome]['dimensioni']] # Creo le etichette sull'asse delle x con le dimensioni degli array
+            plt.xticks(ticks=range(len(x_labels)), labels=x_labels, rotation=45)  # Setto le etichette dell'asse delle x
             plt.title(nome)
             plt.ylabel("Tempo d'esecuzione medio")
             plt.xlabel('Numero della run e Dimensione dell\'array')
