@@ -104,11 +104,11 @@ def genGrafico(algoritmi, tempi_medi): # Funzione per generare i grafici compara
             plt.figure(figsize=(20, 10))
             plt.plot(tempi_medi[nome]['medio'], label='Caso Medio')
             plt.plot(tempi_medi[nome]['peggiore'], label='Caso Peggiore')
-            x_labels = [f"Dim. {d}" for d in tempi_medi[nome]['dimensioni']] # Creo le etichette sull'asse delle x con le dimensioni degli array
-            plt.xticks(ticks=range(len(x_labels)), labels=x_labels, rotation=45)  # Setto le etichette dell'asse delle x
+            x_labels = [f"{d}" for d in tempi_medi[nome]['dimensioni']] # Creo le etichette sull'asse delle x con le dimensioni degli array
+            plt.xticks(ticks=range(len(x_labels)), labels=x_labels, rotation=90)  # Setto le etichette dell'asse delle x
             plt.title(nome)
             plt.ylabel("Tempo d'esecuzione medio")
-            plt.xlabel('Numero della run e Dimensione dell\'array')
+            plt.xlabel('Dimensione dell\'array')
             plt.legend()
             plt.savefig(f'{nome}_grafico.png')
 
